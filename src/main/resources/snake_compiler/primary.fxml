@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.TextFlow?>
+
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="463.0" minWidth="600.0" prefHeight="463.0" prefWidth="600.0" styleClass="container" stylesheets="@../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake_compiler.PrimaryController">
+   <children>
+      <GridPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="70.0" minWidth="600.0" prefHeight="70.0" prefWidth="600.0" snapToPixel="false" styleClass="upperContainer" stylesheets="@../stylesheets/stylesheet.css" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="152.7999725341797" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.2000274658203" minWidth="10.0" prefWidth="447.2000274658203" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="upload" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#upload" prefHeight="30.0" prefWidth="94.0" styleClass="upload" stylesheets="@../stylesheets/stylesheet.css" text="Upload a File" textFill="WHITE">
+               <GridPane.margin>
+                  <Insets left="28.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TextField fx:id="upload_directory" editable="false" prefHeight="26.0" prefWidth="330.0" promptText=".SNK FILE" styleClass="upload_directory" stylesheets="@../stylesheets/stylesheet.css" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="17.0" right="13.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
+         </children>
+      </GridPane>
+      <TabPane accessibleRole="MENU_BAR" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="370.0" minWidth="600.0" prefHeight="200.0" prefWidth="200.0" styleClass="tabPane" stylesheets="@../stylesheets/stylesheet.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <tabs>
+            <Tab closable="false" text="Content">
+              <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
+                     <children>
+                        <TextArea fx:id="original" layoutX="20.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#enableAll" prefHeight="282.0" prefWidth="579.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextArea>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </AnchorPane>
+              </content>
+            </Tab>
+          <Tab fx:id="lextab" closable="false" disable="true" onSelectionChanged="#lexicalAnalysis" styleClass="lexical" text="Lexical Analysis">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
+                     <children>
+                        <ScrollPane id="scroll" layoutX="20.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                           <content>
+                              <TextFlow id="text-flow" fx:id="lexical" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                                 <opaqueInsets>
+                                    <Insets left="10.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" top="3.0" />
+                                 </padding>
+                              </TextFlow>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="syntaxtab" closable="false" disable="true" onSelectionChanged="#sytaxicAnalysis" styleClass="syntax" text="Syntaxic Analysis">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                           <content>
+                              <TextFlow id="text-flow" fx:id="syntax" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                                 <opaqueInsets>
+                                    <Insets left="10.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" top="3.0" />
+                                 </padding>
+                              </TextFlow>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="sytab" closable="false" disable="true" onSelectionChanged="#semanticAnalysis" styleClass="symantic" text="Semantic Analysis">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                           <content>
+                              <TextFlow id="text-flow" fx:id="semantic" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
+                                 <cursor>
+                                    <Cursor fx:constant="TEXT" />
+                                 </cursor>
+                                 <opaqueInsets>
+                                    <Insets left="10.0" />
+                                 </opaqueInsets>
+                                 <padding>
+                                    <Insets left="5.0" top="3.0" />
+                                 </padding>
+                              </TextFlow>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </TabPane>
+   </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
