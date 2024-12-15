@@ -1,0 +1,12 @@
+Snk_Begin
+Snk_Int z#
+Set z 7#
+If [z > 5]
+    Begin
+    Snk_Print "z is greater than 5"#
+    If [z = 7]
+        Snk_Print "z is exactly 7"#
+    End
+Else
+    Snk_Print "z is not greater than 5"#
+Snk_End

@@ -28,9 +28,3 @@ Semantic errors must be printed such as; incompatible types, using an undeclared
 * [X] **Snk_Strg** for declaring strings.
 * [X] A float is composed of 2 integers separated by a point.
 * [X] A string must be inside double quotes (**" "**).
-
-# NEED TO DO
-
-* [X] Adding the rules in the about page.
-* [ ] Semantic analysis: Type mismatch
-* [X] Semantic Analysis: undeclared variables

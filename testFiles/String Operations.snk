@@ -1,0 +1,9 @@
+Snk_Begin
+Snk_Strg message#
+Set message "This is a string"#
+Snk_Print message#
+If ["This is a string" = message]
+    Snk_Print "The string matches!"#
+Else
+    Snk_Print "The string does not match"#
+Snk_End
