@@ -29,17 +29,14 @@ Semantic errors must be printed such as; incompatible types, using an undeclared
 * A float is composed of 2 integers separated by a point.
 * A string must be inside double quotes (**" "**).
 
-# Front End Exploration
+# Front-End Exploration
 
 ![1734253780860](image/README/1734253780860.png "Content of the uploaded file")
-
 
 ![1734253802430](image/README/1734253802430.png "Lexical Analysis")
 
 ![1734253818236](image/README/1734253818236.png "Syntax Analysis")
 
-
 ![1734253833525](image/README/1734253833525.png "Semantic Analysis")
-
 
 ![1734253849078](image/README/1734253849078.png "About")
