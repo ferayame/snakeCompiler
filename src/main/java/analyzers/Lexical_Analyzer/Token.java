@@ -28,34 +28,34 @@ public class Token {
     @Override
     public String toString() {
         switch (type) {
-            case TokenType.KEYWORDPRSTR:
+            case TokenType.Snk_Begin:
                 return value + ": Start of the program " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDPREND:
+            case TokenType.Snk_End:
                 return value + ": End of the program " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDINT:
+            case TokenType.Snk_Int:
                 return value + ": Integer declaration " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDFLT:
+            case TokenType.Snk_Real:
                 return value + ": Float declaration " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDSTR:
+            case TokenType.Snk_Strg:
                 return value + ": String declaration " + "[Ln " + lineNumber + "]";
 
             case TokenType.COMMENT:
                 return value + ": Comment " + "[Ln " + lineNumber + "]";
 
-            case TokenType.ENDING:
+            case TokenType.EndOfInstruction:
                 return value + ": End of the instruction " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDCND:
+            case TokenType.IfElse:
                 return value + ": Condition keyword " + "[Ln " + lineNumber + "]";
 
-            case TokenType.CONDITIONSTR:
+            case TokenType.OpenSBraquets:
                 return value + ": Start of the condition " + "[Ln " + lineNumber + "]";
 
-            case TokenType.CONDITIONEND:
+            case TokenType.ClosedSBraquets:
                 return value + ": End of the condition " + "[Ln " + lineNumber + "]";
 
             case TokenType.SET:
@@ -70,23 +70,26 @@ public class Token {
             case TokenType.IDENTIFIER:
                 return value + ": Identifier " + "[Ln " + lineNumber + "]";
 
-            case TokenType.NUMBER:
-                return value + ": A number " + "[Ln " + lineNumber + "]";
+            case TokenType.INTEGER:
+                return value + ": An Integer " + "[Ln " + lineNumber + "]";
+
+            case TokenType.FLOAT:
+                return value + ": A Float " + "[Ln " + lineNumber + "]";
 
             case TokenType.RELOPERATOR:
                 return value + ": Relational Operation " + "[Ln " + lineNumber + "]";
 
-            case TokenType.PUNCTUATION:
+            case TokenType.COMMA:
                 return value + ": Separator " + "[Ln " + lineNumber + "]";
 
-            case TokenType.KEYWORDPRINT:
+            case TokenType.Snk_Print:
                 return value + ": Printing keyword " + "[Ln " + lineNumber + "]";
 
             case TokenType.MESSAGE:
                 return value + ": Message to be printed " + "[Ln " + lineNumber + "]";
 
             case TokenType.BEGIN:
-                return value + ": Start of the condition bloc " + "[Ln " + lineNumber + "]";
+                return value + ": Start of the block inside the IF/Else " + "[Ln " + lineNumber + "]";
 
             case TokenType.END:
                 return value + ": End of the condition bloc " + "[Ln " + lineNumber + "]";

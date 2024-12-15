@@ -47,52 +47,55 @@ public class Lexer {
         }
 
         String[] tokenPatterns = {
-                "Snk_Begin", // KEYWORDPRSTR
-                "Snk_End", // KEYWORDPREND
-                "Snk_Int", // KEYWORDINT
-                "Snk_Real", // KEYWORDFLT
-                "Snk_Strg", // KEYWORDSTR
-                "Snk_Print", // KEYWORDPRINT
+                "Snk_Begin", // Snk_Begin
+                "Snk_End", // Snk_End
+                "Snk_Int", // Snk_Int
+                "Snk_Real", // Snk_Real
+                "Snk_Strg", // Snk_Strg
+                "Snk_Print", // Snk_Print
                 "Begin",
                 "End",
                 "from",
                 "##.*", // COMMENT
-                "#", // ENDING
+                "#", // EndOfInstruction
                 "If|Else", // CONDITION
-                "\\[", // CONDITIONSTR
-                "\\]", // CONDITIONEND
+                "\\[", // OpenSBraquets
+                "\\]", // ClosedSBraquets
                 "Set",
                 "Get",
                 "[a-zA-Z][a-zA-Z0-9_]*", // IDENTIFIER
-                "[-+]?[0-9]+\\.?[0-9]*", // FLOAT
-                // "[-+]?[0-9]+", // INTEGER
-                "=|>|<|>=|<=", // RELOPERATOR
-                ",", // Punctuation
-                "\".*? \"", // MESSAGE
+                "[-+]?[0-9]\\.[0-9]*", // not considered
+                "[-+]?[0-9]{2}\\.[0-9]*", // Float
+                "[-+]?[0-9]+", // INTEGER
+                "=|>|<|>=|<=|!=", // RELOPERATOR
+                ",", // COMMA
+                "\".*?\"", // MESSAGE
                 ".*" // All the rest
         };
 
         TokenType[] tokenTypes = {
-                TokenType.KEYWORDPRSTR,
-                TokenType.KEYWORDPREND,
-                TokenType.KEYWORDINT,
-                TokenType.KEYWORDFLT,
-                TokenType.KEYWORDSTR,
-                TokenType.KEYWORDPRINT,
+                TokenType.Snk_Begin,
+                TokenType.Snk_End,
+                TokenType.Snk_Int,
+                TokenType.Snk_Real,
+                TokenType.Snk_Strg,
+                TokenType.Snk_Print,
                 TokenType.BEGIN,
                 TokenType.END,
                 TokenType.FROM,
                 TokenType.COMMENT,
-                TokenType.ENDING,
-                TokenType.KEYWORDCND,
-                TokenType.CONDITIONSTR,
-                TokenType.CONDITIONEND,
+                TokenType.EndOfInstruction,
+                TokenType.IfElse,
+                TokenType.OpenSBraquets,
+                TokenType.ClosedSBraquets,
                 TokenType.SET,
                 TokenType.GET,
                 TokenType.IDENTIFIER,
-                TokenType.NUMBER,
+                TokenType.UNKNOWN,
+                TokenType.FLOAT,
+                TokenType.INTEGER,
                 TokenType.RELOPERATOR,
-                TokenType.PUNCTUATION,
+                TokenType.COMMA,
                 TokenType.MESSAGE,
                 TokenType.UNKNOWN
         };

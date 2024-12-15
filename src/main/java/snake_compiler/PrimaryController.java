@@ -2,11 +2,13 @@ package snake_compiler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
 import analyzers.Lexical_Analyzer.Lexer;
 import analyzers.Lexical_Analyzer.Token;
+import analyzers.Semantic_Analyzer.SemanticAnalyzer;
 import analyzers.Syntax_Analyzer.SyntaxAnalyzer;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,11 +19,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
@@ -38,13 +43,21 @@ public class PrimaryController {
     @FXML
     private TextArea original;
     @FXML
-    private Tab lextab, syntaxtab, sytab;
+    private Tab content, lextab, syntaxtab, sytab;
     @FXML
     private Label titleBar;
     @FXML
-    private TextFlow lexical, semanticm, syntax;
+    private TextFlow lexical, semantic, syntax;
+    @FXML
+    private TabPane tabPane;
 
     double x, y;
+
+    List<Token> allTokens = new LinkedList<>();
+    SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer();
+    SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
+
+    Text noError = new Text();
 
     @FXML
     void upload(MouseEvent event) {
@@ -58,6 +71,7 @@ public class PrimaryController {
             original.clear();
             File file = fileChooser.showOpenDialog(stage);
             if (file != null) {
+                tabPane.getSelectionModel().select(content);
                 upload_directory.setText(file.getAbsolutePath());
                 try {
                     Scanner reader = new Scanner(file);
@@ -80,26 +94,32 @@ public class PrimaryController {
 
     }
 
+    void gettingTokens() {
+        Lexer lexer = new Lexer();
+        allTokens.clear();
+        String[] lines = original.getText().split("\n");
+        for (String line : lines) {
+            lexer = new Lexer(line);
+            List<Token> tokens = lexer.tokenize();
+            for (Token token : tokens) {
+                allTokens.add(token);
+            }
+        }
+    }
+
     @FXML
     void lexicalAnalysis(Event event) {
         lexical.getChildren().clear();
-        Lexer lexer = new Lexer();
 
         if (lextab.isSelected()) {
-            String[] lines = original.getText().split("\n");
-            for (String line : lines) {
-                lexer = new Lexer(line);
-                List<Token> tokens = lexer.tokenize();
-
-                for (Token token : tokens) {
-                    // lexical.appendText(token + "\n");
-                    Text text = new Text(token + "\n");
-                    if (text.getText().contains("Unknown")) {
-                        text.setFill(Color.RED);
-                    } else
-                        text.setFill(Color.WHITE);
-                    lexical.getChildren().add(text);
-                }
+            gettingTokens();
+            for (Token token : allTokens) {
+                Text text = new Text(token + "\n");
+                if (text.getText().contains("Unknown")) {
+                    text.setFill(Color.RED);
+                } else
+                    text.setFill(Color.WHITE);
+                lexical.getChildren().add(text);
             }
         }
     }
@@ -109,29 +129,55 @@ public class PrimaryController {
         syntax.getChildren().clear();
         if (syntaxtab.isSelected()) {
             try {
-                String[] lines = original.getText().split("\n");
-                for (String line : lines) {
-                    Lexer lexer = new Lexer(line);
-                    List<Token> tokens = lexer.tokenize();
-
-                    SyntaxAnalyzer syntaxAnalyzer = new SyntaxAnalyzer(tokens);
+                gettingTokens();
+                if (!allTokens.isEmpty()) {
+                    syntaxAnalyzer = new SyntaxAnalyzer(allTokens);
                     syntaxAnalyzer.parse();
+
+                    noError = new Text("--------- NO SYNTAX ERROR ---------");
+                    noError.setFill(Color.BEIGE);
+                    noError.setFont(Font.font("Bahnschrift", FontWeight.BOLD, 13));
+                    syntax.getChildren().add(noError);
                 }
             } catch (RuntimeException e) {
+                noError.setText("");
                 Text text = new Text(e.toString());
                 text.setFill(Color.RED);
+                text.setFont(Font.font("Bahnschrift", FontWeight.BOLD, 13));
                 syntax.getChildren().add(text);
             }
         }
+
     }
 
     @FXML
     void semanticAnalysis(Event event) {
-        // symantic.setText("NOT YET");
-        // SemanticAnalyzer semanticAnalyzer = new SemanticAnalyzer();
-        // // Assume you have a method to convert the parse tree to a SyntaxNode
-        // SyntaxNode root = convertParseTreeToSyntaxNode(syntaxAnalyzer);
-        // semanticAnalyzer.analyze(root);
+        semantic.getChildren().clear();
+        if (!noError.getText().isEmpty()) {
+            if (sytab.isSelected()) {
+                try {
+                    gettingTokens();
+                    semanticAnalyzer = new SemanticAnalyzer(allTokens);
+                    semanticAnalyzer.analyze();
+
+                    Text text = new Text("--------- NO PROBLEM WERE FOUND ---------");
+                    text.setFill(Color.BEIGE);
+                    text.setFont(Font.font("Bahnschrift", FontWeight.BOLD, 13));
+                    semantic.getChildren().add(text);
+
+                } catch (RuntimeException e) {
+                    Text text = new Text(e.getMessage());
+                    text.setFill(Color.RED);
+                    text.setFont(Font.font("Bahnschrift", FontWeight.MEDIUM, 13));
+                    semantic.getChildren().add(text);
+                }
+            }
+        } else {
+            Text text = new Text("CANNOT PROCEED WITH THE SEMANTIC ANALYSIS, CHECK THE SYNTAX FIRST");
+            text.setFill(new Color(0.69, 0.71, 1, 1));
+            text.setFont(Font.font("Bahnschrift", FontWeight.BOLD, 13));
+            semantic.getChildren().add(text);
+        }
     }
 
     @FXML

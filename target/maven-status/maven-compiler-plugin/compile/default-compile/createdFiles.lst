@@ -1,4 +1,15 @@
 snake_compiler\PrimaryController.class
-snake_compiler\SecondaryController.class
+analyzers\Semantic_Analyzer\Symbol.class
+analyzers\Semantic_Analyzer\SyntaxNode.class
+analyzers\Lexical_Analyzer\Token$1.class
+analyzers\Lexical_Analyzer\Lexer.class
+Exceptions\SemanticError.class
+analyzers\Lexical_Analyzer\Token.class
+ENUMERATORS\TokenType.class
+Exceptions\SyntaxError.class
+analyzers\Semantic_Analyzer\SemanticAnalyzer.class
+Exceptions\SyntaxError$1.class
 module-info.class
+analyzers\Syntax_Analyzer\SyntaxAnalyzer.class
+ENUMERATORS\NodeType.class
 snake_compiler\App.class

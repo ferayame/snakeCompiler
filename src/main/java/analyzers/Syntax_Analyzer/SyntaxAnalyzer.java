@@ -9,12 +9,14 @@ import analyzers.Lexical_Analyzer.Token;
 public class SyntaxAnalyzer {
     private List<Token> tokens;
     private int currentPosition;
-    private int lineNumber;
 
     public SyntaxAnalyzer(List<Token> tokens) {
         this.tokens = tokens;
         this.currentPosition = 0;
-        this.lineNumber = 1;
+    }
+
+    public SyntaxAnalyzer() {
+
     }
 
     public void parse() {
@@ -22,70 +24,85 @@ public class SyntaxAnalyzer {
     }
 
     private void program() {
-        expect(TokenType.KEYWORDPRSTR);
+        expect(TokenType.Snk_Begin);
+        ensureEndOfLine();
         statementList();
-        expect(TokenType.KEYWORDPREND);
+        expect(TokenType.Snk_End);
     }
 
     private void statementList() {
-        while (currentPosition < tokens.size() && tokens.get(currentPosition).getType() != TokenType.KEYWORDPREND) {
+        while (currentPosition < tokens.size() && tokens.get(currentPosition).getType() != TokenType.Snk_End
+                && tokens.get(currentPosition).getType() != TokenType.END) {
             statement();
+            ensureEndOfLine();
         }
     }
 
     private void statement() {
         Token currentToken = tokens.get(currentPosition);
-        if (currentToken.getType() == TokenType.KEYWORDCND && currentToken.getValue().equals("If")) {
+        if (currentToken.getType() == TokenType.IfElse && currentToken.getValue().equals("If")) {
             ifStatement();
-        } else if (currentToken.getType() == TokenType.KEYWORDINT || currentToken.getType() == TokenType.KEYWORDFLT) {
+        } else if (currentToken.getType() == TokenType.Snk_Int || currentToken.getType() == TokenType.Snk_Real
+                || currentToken.getType() == TokenType.Snk_Strg) {
             declaration();
+            expect(TokenType.EndOfInstruction);
         } else if (currentToken.getType() == TokenType.SET) {
-            assignmentInt();
+            assignmentVal();
+            expect(TokenType.EndOfInstruction);
         } else if (currentToken.getType() == TokenType.GET) {
             assignmentVar();
-        } else if (currentToken.getType() == TokenType.KEYWORDPRINT) {
+            expect(TokenType.EndOfInstruction);
+        } else if (currentToken.getType() == TokenType.Snk_Print) {
             printing();
+            expect(TokenType.EndOfInstruction);
         } else if (currentToken.getType() == TokenType.COMMENT) {
             comment();
         } else {
-            throw new SyntaxError("Unexpected token: " + currentToken, currentToken.getLineNumber());
+            throw new SyntaxError(currentToken, currentToken.getType());
         }
-        expect(TokenType.ENDING);
     }
 
     private void comment() {
         expect(TokenType.COMMENT);
     }
 
-    // DONE
     private void printing() {
-        expect(TokenType.KEYWORDPRINT);
+        expect(TokenType.Snk_Print);
         do {
             if (match(TokenType.MESSAGE)) {
                 Token string = expect(TokenType.MESSAGE);
-            } else {
+            } else if (match(TokenType.IDENTIFIER)) {
                 Token identifier = expect(TokenType.IDENTIFIER);
+            } else if (match(TokenType.INTEGER)) {
+                Token number = expect(TokenType.INTEGER);
+            } else if (match(TokenType.FLOAT)) {
+                Token number = expect(TokenType.FLOAT);
+            } else {
+                throw new SyntaxError(TokenType.Snk_Print, tokens.get(currentPosition).getLineNumber());
             }
-        } while (match(TokenType.PUNCTUATION));
+        } while (matchThenInc(TokenType.COMMA));
     }
 
-    // DONE
     private void declaration() {
-        Token type = expect(TokenType.KEYWORDINT, TokenType.KEYWORDFLT);
-        do {
-            Token identifier = expect(TokenType.IDENTIFIER);
-        } while (match(TokenType.PUNCTUATION));
-
+        if (matchThenInc(TokenType.Snk_Int) || matchThenInc(TokenType.Snk_Real) || matchThenInc(TokenType.Snk_Strg)) {
+            do {
+                Token identifier = expect(TokenType.IDENTIFIER);
+            } while (matchThenInc(TokenType.COMMA));
+        }
     }
 
-    // DONE
-    private void assignmentInt() {
+    private void assignmentVal() {
         expect(TokenType.SET);
         Token identifier = expect(TokenType.IDENTIFIER);
-        Token value = expect(TokenType.NUMBER);
+        if (match(TokenType.INTEGER)) {
+            Token value = expect(TokenType.INTEGER);
+        } else if (match(TokenType.FLOAT)) {
+            Token value = expect(TokenType.FLOAT);
+        } else {
+            Token value = expect(TokenType.MESSAGE);
+        }
     }
 
-    // DONE 
     private void assignmentVar() {
         expect(TokenType.GET);
         Token identifier = expect(TokenType.IDENTIFIER);
@@ -93,20 +110,19 @@ public class SyntaxAnalyzer {
         Token fromIdentifier = expect(TokenType.IDENTIFIER);
     }
 
-    // DONE
     private void ifStatement() {
-        expect(TokenType.CONDITIONEND, "If");
-        expect(TokenType.CONDITIONSTR);
+        expect(TokenType.IfElse, "If");
+        expect(TokenType.OpenSBraquets);
         expression();
-        expect(TokenType.CONDITIONEND);
-        if (match(TokenType.BEGIN)) {
+        expect(TokenType.ClosedSBraquets);
+        if (matchThenInc(TokenType.BEGIN)) {
             statementList();
             expect(TokenType.END);
         } else {
             statement();
         }
-        if (match(TokenType.CONDITIONEND, "Else")) {
-            if (match(TokenType.BEGIN)) {
+        if (match(TokenType.IfElse, "Else")) {
+            if (matchThenInc(TokenType.BEGIN)) {
                 statementList();
                 expect(TokenType.END);
             } else {
@@ -116,26 +132,56 @@ public class SyntaxAnalyzer {
     }
 
     private void expression() {
-        Token identifier = expect(TokenType.IDENTIFIER);
+        if (match(TokenType.IDENTIFIER)) {
+            Token identifier = expect(TokenType.IDENTIFIER);
+        } else if (match(TokenType.MESSAGE)) {
+            Token msg = expect(TokenType.MESSAGE);
+        } else if(match(TokenType.INTEGER)){
+            Token val = expect(TokenType.INTEGER);
+        } else {
+            Token val = expect(TokenType.FLOAT);
+        }
         expect(TokenType.RELOPERATOR);
-        if(match(TokenType.IDENTIFIER)){
+        if (match(TokenType.IDENTIFIER)) {
             Token id = expect(TokenType.IDENTIFIER);
-        } else{
-            Token val = expect(TokenType.NUMBER);
+        } else if(match(TokenType.INTEGER)){
+            Token val = expect(TokenType.INTEGER);
+        } else if(match(TokenType.FLOAT)){
+            Token val = expect(TokenType.FLOAT);
+        } else {
+            Token var = expect(TokenType.MESSAGE);
         }
     }
 
-    private Token expect(TokenType... types) {
+    private Token expect(TokenType type) {
         Token currentToken = tokens.get(currentPosition);
-        for (TokenType type : types) {
-            if (currentToken.getType() == type) {
-                currentPosition++;
-                return currentToken;
+        Token previousToken = getPreviousToken(currentPosition);
+
+        if (currentToken.getType() == type) {
+            currentPosition++;
+            return currentToken;
+        }
+        if (previousToken != null) {
+            if (previousToken.getType() == TokenType.GET || previousToken.getType() == TokenType.SET) {
+                throw new SyntaxError(currentToken, previousToken.getType());
+            } else if (previousToken.getType() == TokenType.FROM) {
+                throw new SyntaxError("An identifier was expected after the token 'from' ",
+                        currentToken.getLineNumber());
+            } else if (previousToken.getType() == TokenType.Snk_Strg || previousToken.getType() == TokenType.Snk_Int
+                    || previousToken.getType() == TokenType.Snk_Real) {
+                throw new SyntaxError(previousToken.getType(), currentToken.getLineNumber());
+            } else if (previousToken.getType() == TokenType.COMMA) {
+                throw new SyntaxError("Delete the ',' or add another identifier to complete the declaration", currentToken.getLineNumber());
             }
         }
-        throw new SyntaxError("Expected token of type " + types + " but found " + currentToken,
-                currentToken.getLineNumber());
+        throw new SyntaxError(currentToken, type);
+    }
 
+    Token getPreviousToken(int currentPosition) {
+        if (currentPosition > 0) {
+            return tokens.get(currentPosition - 1);
+        }
+        return null;
     }
 
     private Token expect(TokenType type, String value) {
@@ -144,12 +190,23 @@ public class SyntaxAnalyzer {
             currentPosition++;
             return currentToken;
         } else {
-            throw new RuntimeException(
-                    "Expected token of type " + type + " with value " + value + " but found " + currentToken);
+            throw new SyntaxError(currentToken, type);
         }
     }
 
     private boolean match(TokenType type) {
+        Token currentToken = tokens.get(currentPosition);
+        if (currentToken.getValue().contains("\"") && currentToken.getType() == TokenType.UNKNOWN) {
+            throw new SyntaxError(currentToken, TokenType.MESSAGE);
+        } else {
+            if (currentToken.getType() == type) {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    private boolean matchThenInc(TokenType type) {
         Token currentToken = tokens.get(currentPosition);
         if (currentToken.getType() == type) {
             currentPosition++;
@@ -157,6 +214,7 @@ public class SyntaxAnalyzer {
         }
         return false;
     }
+
     private boolean match(TokenType type, String value) {
         Token currentToken = tokens.get(currentPosition);
         if (currentToken.getType() == type && currentToken.getValue().equals(value)) {
@@ -164,5 +222,15 @@ public class SyntaxAnalyzer {
             return true;
         }
         return false;
+    }
+
+    private void ensureEndOfLine() {
+        if (currentPosition < tokens.size()) {
+            Token currentToken = tokens.get(currentPosition);
+            Token previousToken = tokens.get(currentPosition - 1);
+            if (currentToken.getLineNumber() == previousToken.getLineNumber()) {
+                throw new SyntaxError("Expected end of line but found additional tokens", currentToken.getLineNumber());
+            }
+        }
     }
 }

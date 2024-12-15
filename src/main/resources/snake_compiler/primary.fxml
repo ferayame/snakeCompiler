@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="463.0" minWidth="600.0" prefHeight="463.0" prefWidth="600.0" styleClass="container" stylesheets="@../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake_compiler.PrimaryController">
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="463.0" minWidth="600.0" prefHeight="525.0" prefWidth="789.0" styleClass="container" stylesheets="@../stylesheets/stylesheet.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="snake_compiler.PrimaryController">
    <children>
       <GridPane alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="70.0" minWidth="600.0" prefHeight="70.0" prefWidth="600.0" snapToPixel="false" styleClass="upperContainer" stylesheets="@../stylesheets/stylesheet.css" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.20001220703125" minWidth="10.0" prefWidth="152.7999725341797" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="447.2000274658203" minWidth="10.0" prefWidth="447.2000274658203" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="428.0" minWidth="10.0" prefWidth="266.39996337890625" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0000762939453" minWidth="10.0" prefWidth="476.00007629394526" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="upload" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#upload" prefHeight="30.0" prefWidth="94.0" styleClass="upload" stylesheets="@../stylesheets/stylesheet.css" text="Upload a File" textFill="WHITE">
+            <Button fx:id="upload" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#upload" prefHeight="30.0" prefWidth="94.0" styleClass="upload" stylesheets="@../stylesheets/stylesheet.css" text="Upload a File" textFill="WHITE">
                <GridPane.margin>
-                  <Insets left="28.0" />
+                  <Insets left="85.0" />
                </GridPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TextField fx:id="upload_directory" editable="false" prefHeight="26.0" prefWidth="330.0" promptText=".SNK FILE" styleClass="upload_directory" stylesheets="@../stylesheets/stylesheet.css" GridPane.columnIndex="1">
+            <TextField fx:id="upload_directory" editable="false" prefHeight="26.0" prefWidth="494.0" promptText=".SNK FILE" styleClass="upload_directory" stylesheets="@../stylesheets/stylesheet.css" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="17.0" right="13.0" />
                </GridPane.margin>
@@ -42,10 +47,13 @@
                </cursor>
             </TextField>
          </children>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
       </GridPane>
-      <TabPane accessibleRole="MENU_BAR" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="370.0" minWidth="600.0" prefHeight="200.0" prefWidth="200.0" styleClass="tabPane" stylesheets="@../stylesheets/stylesheet.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <TabPane fx:id="tabPane" accessibleRole="MENU_BAR" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="370.0" minWidth="600.0" prefHeight="200.0" prefWidth="200.0" styleClass="tabPane" stylesheets="@../stylesheets/stylesheet.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
         <tabs>
-            <Tab closable="false" text="Content">
+            <Tab fx:id="content" closable="false" text="Content">
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
                      <children>
@@ -65,7 +73,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
                      <children>
-                        <ScrollPane id="scroll" layoutX="20.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                        <ScrollPane id="scroll" fitToHeight="true" fitToWidth="true" layoutX="20.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <content>
                               <TextFlow id="text-flow" fx:id="lexical" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
                                  <cursor>
@@ -88,7 +96,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../stylesheets/stylesheet.css">
                      <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <content>
                               <TextFlow id="text-flow" fx:id="syntax" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
                                  <cursor>
@@ -111,7 +119,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ScrollPane prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="579.0" styleClass="text-area" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                            <content>
                               <TextFlow id="text-flow" fx:id="semantic" lineSpacing="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="329.0" prefWidth="544.0" styleClass="text-flow" stylesheets="@../stylesheets/stylesheet.css">
                                  <cursor>
@@ -129,6 +137,172 @@
                      </children>
                   </AnchorPane>
               </content>
+            </Tab>
+            <Tab closable="false" styleClass="abouttt" text="About">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="abouttt" stylesheets="@../stylesheets/stylesheet.css">
+                     <children>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="34.0" layoutY="65.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="510.0" prefWidth="710.0" styleClass="about" stylesheets="@../stylesheets/stylesheet.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                           <content>
+                              <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="353.0" prefWidth="705.0" styleClass="letsseee" stylesheets="@../stylesheets/stylesheet.css">
+                                <columnConstraints>
+                                  <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="339.9999755859375" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints maxHeight="147.60000114440916" minHeight="10.0" prefHeight="50.39997863769531" valignment="TOP" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="0.0" prefHeight="204.40001220703124" valignment="CENTER" vgrow="NEVER" />
+                                    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="133.19998779296878" valignment="CENTER" vgrow="ALWAYS" />
+                                </rowConstraints>
+                                 <children>
+                                    <AnchorPane maxHeight="675.0" maxWidth="675.0" prefHeight="55.0" prefWidth="500.0" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.valignment="TOP" GridPane.vgrow="NEVER">
+                                       <children>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="522.0" minHeight="51.0" minWidth="522.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="51.0" prefWidth="522.0" text="ABOUT SNAKE LANGUAGE" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <font>
+                                                <Font name="Times New Roman Bold" size="27.0" />
+                                             </font>
+                                             <cursor>
+                                                <Cursor fx:constant="DEFAULT" />
+                                             </cursor>
+                                          </Label>
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </AnchorPane>
+                                    <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="191.0" prefWidth="764.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                      <columnConstraints>
+                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="NEVER" />
+                                        <RowConstraints minHeight="10.0" prefHeight="182.0" valignment="CENTER" vgrow="NEVER" />
+                                      </rowConstraints>
+                                       <children>
+                                          <ImageView fitHeight="161.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                             <image>
+                                                <Image url="@../images/variables_assignment.png" />
+                                             </image>
+                                          </ImageView>
+                                          <ImageView fitHeight="162.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true" smooth="false" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                                             <image>
+                                                <Image url="@../images/variables_declaration.png" />
+                                             </image>
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                             <viewport>
+                                                <Rectangle2D />
+                                             </viewport>
+                                          </ImageView>
+                                          <Label prefHeight="28.0" prefWidth="274.0" text="Variables Declaration and printing:" textFill="WHITE">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                          <Label text="Variables Assignment:" textFill="WHITE" GridPane.columnIndex="1">
+                                             <font>
+                                                <Font name="System Bold" size="15.0" />
+                                             </font>
+                                             <GridPane.margin>
+                                                <Insets left="20.0" />
+                                             </GridPane.margin>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
+                                    <Label text="Info:" textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <GridPane.margin>
+                                          <Insets left="20.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font name="System Bold" size="20.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="29.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../icons/info.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <Label text="· A float must contain at least 2 numbers before the floating point." textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <GridPane.margin>
+                                          <Insets left="40.0" top="30.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="50.0" layoutY="296.0" text="· Meanwhile the condition accept only an identifier or a number, arithmetical operations are" textFill="WHITE" textOverrun="CLIP" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <GridPane.margin>
+                                          <Insets left="40.0" top="50.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="50.0" layoutY="316.0" text="· When having a problem verify the given line." textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <GridPane.margin>
+                                          <Insets left="40.0" top="70.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="50.0" layoutY="345.0" text="· If there are more than one statement inside the If of Else block surrounder them with            and" textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="40.0" top="90.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="50.0" layoutY="365.0" text="Begin" textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="610.0" top="90.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="574.0" layoutY="365.0" text="End." textFill="WHITE" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="686.0" top="90.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                    <Label layoutX="649.0" layoutY="365.0" text="NOT ALLOWED" textFill="#ffdbdb" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                                       <font>
+                                          <Font name="System Bold" size="15.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="647.0" top="50.0" />
+                                       </GridPane.margin>
+                                    </Label>
+                                 </children>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                  </AnchorPane>
+               </content>
             </Tab>
         </tabs>
          <cursor>

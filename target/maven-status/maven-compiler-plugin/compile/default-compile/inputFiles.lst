@@ -1,4 +1,13 @@
-c:\Users\HP\Documents\snake_Compilator\snake\src\main\java\snake_compiler\SecondaryController.java
-c:\Users\HP\Documents\snake_Compilator\snake\src\main\java\module-info.java
-c:\Users\HP\Documents\snake_Compilator\snake\src\main\java\snake_compiler\PrimaryController.java
-c:\Users\HP\Documents\snake_Compilator\snake\src\main\java\snake_compiler\App.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\ENUMERATORS\TokenType.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\Exceptions\SemanticError.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\module-info.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\ENUMERATORS\NodeType.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\snake_compiler\PrimaryController.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\snake_compiler\App.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Lexical_Analyzer\Lexer.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Semantic_Analyzer\SemanticAnalyzer.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\Exceptions\SyntaxError.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Lexical_Analyzer\Token.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Semantic_Analyzer\SyntaxNode.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Semantic_Analyzer\Symbol.java
+C:\Users\HP\Documents\snake_Compilator\snake\src\main\java\analyzers\Syntax_Analyzer\SyntaxAnalyzer.java
